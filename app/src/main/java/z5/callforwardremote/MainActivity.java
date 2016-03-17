@@ -9,10 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+//import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.net.Uri;
 import android.widget.CheckBox;
+import android.telephony.SmsManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,6 +82,17 @@ public class MainActivity extends AppCompatActivity {
         checkBox = (CheckBox) findViewById(R.id.chkBx_TextForwarding);
         if (checkBox.isChecked())
         {
+            try {
+                Intent intentTextForward = new Intent(Intent.ACTION_VIEW);
+                intentTextForward.putExtra("sms_body", "default content");//think this is text message text
+                intentTextForward.setType("vnd.android-dir/mms-sms");//where did this string come from????
+                startActivity(intentTextForward);
+            }
+            catch (Exception e) {
+                //TODO: send message to database that a text was recieved and failed to forward
+                //include text body?
+            }
+
         }
     }
 }
