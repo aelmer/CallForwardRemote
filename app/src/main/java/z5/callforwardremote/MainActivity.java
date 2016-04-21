@@ -1,21 +1,17 @@
 package z5.callforwardremote;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-//import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.net.Uri;
 import android.widget.CheckBox;
-import android.telephony.SmsManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,23 +20,29 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.onClickListener() {
+        button.setOnClickListener(MainActivity.this);//new View.onClickListener() {
 
+            /*@Override
             public void onClick(View v) {
                 goToSetForwarding();
-            }
+            }*/
 
-        });
+        //});
+    }
+
+    @Override
+    public void onClick(View v) {
+        goToSetForwarding();
     }
 
     @Override
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
             //startActivity(intent);
         }
 
-        checkBox = (CheckBox) findViewById(R.id.chkBx_TextForwarding);
+        //moved to SmsUtils TextForward
+        /*checkBox = (CheckBox) findViewById(R.id.chkBx_TextForwarding);
         if (checkBox.isChecked())
         {
             try {
@@ -89,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentTextForward);
             }
             catch (Exception e) {
-                //TODO: send message to database that a text was recieved and failed to forward
+                //TODO: send message to database that a text was received and failed to forward
                 //include text body?
             }
 
-        }
+        }*/
     }
 }
