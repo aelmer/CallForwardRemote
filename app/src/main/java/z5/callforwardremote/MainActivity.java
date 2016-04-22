@@ -11,7 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    SmsUtils sms;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(MainActivity.this);//new View.onClickListener() {
 
-            /*@Override
-            public void onClick(View v) {
-                goToSetForwarding();
-            }*/
-
         //});
+        sms = new SmsUtils();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -69,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void goToSetForwarding() {
         CheckBox checkBox = (CheckBox) findViewById(R.id.chkBx_CallForwarding);
-        if (checkBox.isChecked())
-        {
+        if (checkBox.isChecked()) {
             String callForwardString = "**21*4143011053#";
             Intent intentCallForward = new Intent(Intent.ACTION_DIAL); // ACTION_CALL
             Uri uri2 = Uri.fromParts("tel", callForwardString, "#");
@@ -81,21 +91,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //startActivity(intent);
         }
 
-        //moved to SmsUtils TextForward
-        /*checkBox = (CheckBox) findViewById(R.id.chkBx_TextForwarding);
-        if (checkBox.isChecked())
-        {
-            try {
-                Intent intentTextForward = new Intent(Intent.ACTION_VIEW);
-                intentTextForward.putExtra("sms_body", "default content");//think this is text message text
-                intentTextForward.setType("vnd.android-dir/mms-sms");//where did this string come from????
-                startActivity(intentTextForward);
-            }
-            catch (Exception e) {
-                //TODO: send message to database that a text was received and failed to forward
-                //include text body?
-            }
+        checkBox = (CheckBox) findViewById(R.id.chkBx_TextForwarding);
+        sms.setCallForward(checkBox.isChecked());
+    }
 
-        }*/
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://z5.callforwardremote/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://z5.callforwardremote/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }

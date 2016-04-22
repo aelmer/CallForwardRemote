@@ -24,7 +24,17 @@
                     "android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
+
+    <permission android:name="com.me.app.CallForwardRemote.permission.DangerousRead"
+        android:label="Read and Forward SMS"
+        android:permissionGroup="android.permission-group.SMS"
+        android:protectionLevel="dangerous" />        <!--android:description="@string/permdesc_deadlyActivity"-->
 
     <uses-permission android:name="android.permission.SEND_SMS">
     </uses-permission>
